@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de Activadores · Madre & Adolescente · Edith Lando</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --burgundy: #721124;
+    --burgundy-soft: #8d2538;
+    --burgundy-deep: #4f0a18;
+    --red: #D40E2A;
+    --green: #54AC46;
+    --green-deep: #28621F;
+    --terracotta: #CC6A4C;
+    --cream: #FFF3DA;
+    --cream-soft: #fffaef;
+    --ink: #2a1a1f;
+    --ink-soft: #5c3d44;
+    --ink-mute: #9b8088;
+    --line: #efe3c9;
+    --card: #ffffff;
+    --shadow: 0 1px 2px rgba(114,17,36,0.05), 0 8px 24px rgba(114,17,36,0.08);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body { font-family: 'Lora', Georgia, serif; background: var(--cream); color: var(--ink); line-height: 1.55; -webkit-font-smoothing: antialiased; min-height: 100vh; }
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 24px 80px; }
+  .brand-bar { display:flex; align-items:center; justify-content:space-between; padding: 14px 24px; border-bottom: 1px solid var(--line); background: var(--cream-soft); font-family: 'Montserrat', system-ui, sans-serif; font-size: 13px; color: var(--ink-soft); letter-spacing: 0.02em; }
+  .brand-bar strong { color: var(--burgundy); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 12px;}
+  .brand-bar .right { color: var(--green-deep); font-weight: 500;}
+  h1, h2, h3 { font-family: 'Lora', Georgia, serif; color: var(--ink); margin: 0 0 12px; font-weight: 600; }
+  h1 { font-size: 32px; line-height: 1.2; letter-spacing: -0.01em; color: var(--burgundy);}
+  h2 { font-size: 22px; line-height: 1.3; }
+  h3 { font-size: 17px; line-height: 1.35; }
+  p { margin: 0 0 12px; color: var(--ink-soft); }
+  .lead { font-size: 17px; color: var(--ink); }
+  .muted { color: var(--ink-mute); font-size: 14px; font-family: 'Montserrat', system-ui, sans-serif;}
+  .pill { display:inline-block; font-family: 'Montserrat', system-ui, sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--burgundy); background: rgba(114,17,36,0.08); padding: 5px 12px; border-radius: 999px; font-weight: 600;}
+  .pill.green { color: var(--green-deep); background: rgba(40,98,31,0.08);}
+  .pill.terra { color: var(--terracotta); background: rgba(204,106,76,0.12);}
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+  .card + .card { margin-top: 16px; }
+  hr.soft { border: none; border-top: 1px solid var(--line); margin: 24px 0; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; font-family: 'Montserrat', system-ui, sans-serif; font-size: 14px; font-weight: 600; padding: 13px 24px; border-radius: 999px; border: 1px solid var(--burgundy); background: var(--burgundy); color: #fff; cursor: pointer; transition: all 0.15s ease; text-transform: uppercase; letter-spacing: 0.05em; }
+  .btn:hover { background: var(--burgundy-soft); border-color: var(--burgundy-soft); }
+  .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .btn.secondary { background: transparent; color: var(--burgundy); }
+  .btn.secondary:hover { background: rgba(114,17,36,0.06); }
+  .btn.green { background: var(--green-deep); border-color: var(--green-deep); }
+  .btn.green:hover { background: var(--green); border-color: var(--green); }
+  input[type="email"], input[type="text"], input[type="tel"] { width: 100%; padding: 13px 16px; font-family: 'Montserrat', system-ui, sans-serif; font-size: 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; color: var(--ink); outline: none; transition: border 0.15s ease; }
+  input:focus { border-color: var(--burgundy); }
+  label.field-label { font-family: 'Montserrat', system-ui, sans-serif; font-size: 12px; color: var(--ink-soft); display:block; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600;}
+  .scale { display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap;}
+  .scale button { flex: 1; min-width: 56px; padding: 14px 6px; font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 600; border: 1px solid var(--line); background: #fff; color: var(--ink-soft); border-radius: 10px; cursor: pointer; transition: all 0.15s ease; text-transform: none; letter-spacing: 0; }
+  .scale button:hover { border-color: var(--burgundy); color: var(--burgundy); }
+  .scale button.selected { border-color: var(--burgundy); background: var(--burgundy); color: #fff; }
+  .scale-labels { display:flex; justify-content:space-between; margin-top: 8px; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--ink-mute);}
+  .progress { height: 4px; background: var(--line); border-radius: 999px; margin: 18px 0 22px; overflow: hidden;}
+  .progress > div { height: 100%; background: var(--burgundy); transition: width 0.3s ease; }
+  .result-headline { background: linear-gradient(180deg, var(--cream-soft) 0%, #fff 100%); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px 28px; text-align: center; margin-bottom: 24px; }
+  .result-headline .pair { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; margin: 18px 0 8px; }
+  .activator-tag { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 8px 18px; font-family: 'Montserrat', sans-serif; font-size: 14px; }
+  .activator-tag .lbl { color: var(--ink-mute); font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; display:block; font-weight: 500;}
+  .activator-tag .val { color: var(--burgundy); font-size: 17px; font-weight: 700; font-family: 'Lora', Georgia, serif; }
+  .arrow { color: var(--terracotta); font-size: 22px; }
+  .insight { border-left: 3px solid var(--terracotta); padding: 4px 0 4px 16px; margin: 18px 0; color: var(--ink); font-style: italic; font-size: 16px; }
+  .row { display: flex; gap: 12px; margin: 12px 0; align-items: flex-start; }
+  .row .icon { font-size: 18px; flex-shrink: 0; line-height: 1.5; }
+  .row .body { flex: 1; }
+  .row .body .lbl { font-family: 'Montserrat', sans-serif; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); display:block; margin-bottom: 2px; font-weight: 600;}
+  .actions-list { counter-reset: action; list-style: none; padding: 0; margin: 12px 0 0; }
+  .actions-list li { counter-increment: action; position: relative; padding: 14px 16px 14px 52px; background: var(--cream-soft); border-radius: 10px; margin-bottom: 8px; color: var(--ink); font-size: 15px; line-height: 1.5; }
+  .actions-list li::before { content: counter(action); position: absolute; left: 16px; top: 14px; width: 26px; height: 26px; border-radius: 50%; background: var(--burgundy); color: #fff; font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .map-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .map-grid { grid-template-columns: 1fr 1fr; } }
+  .map-card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .map-card-header { display: flex; align-items: center; gap: 10px; }
+  .map-card-icon { width: 36px; height: 36px; border-radius: 50%; background: rgba(114,17,36,0.07); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .map-card h3 { margin: 0; color: var(--burgundy); font-size: 17px; }
+  .map-card .def { font-size: 14px; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+  .map-card .signals-block { background: var(--cream-soft); border-radius: 8px; padding: 10px 12px; }
+  .map-card .block-label { font-family: 'Montserrat', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); display: block; margin-bottom: 4px; }
+  .map-card .signals-text { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+  .map-card .bridge-block { border-top: 1px dashed var(--line); padding-top: 12px; }
+  .map-card .bridge-text { font-size: 14px; color: var(--green-deep); margin: 0; line-height: 1.5; font-style: italic; }
+  .field-wrap { position: relative; }
+  .field-error { font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--red); margin-top: 5px; font-weight: 500; display: none; }
+  input.invalid { border-color: var(--red); }
+  input.valid { border-color: var(--green); }
+  .footer-note { margin-top: 40px; text-align: center; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--ink-mute); letter-spacing: 0.05em;}
+  .footer-note a { color: var(--burgundy); text-decoration: none; font-weight: 500;}
+  .error-msg { color: var(--red); font-family: 'Montserrat', sans-serif; font-size: 14px; margin-top: 10px; font-weight: 500;}
+  .hidden { display: none !important; }
+  .tip { font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--ink-mute); margin-top: 8px;}
+  .question-text { font-size: 19px; line-height: 1.4; color: var(--ink); margin: 8px 0 4px; font-family: 'Lora', Georgia, serif;}
+  .q-meta { font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500;}
+  .badge-section { display: flex; align-items: center; gap: 10px; margin-bottom: 8px;}
+  .badge-section .dot { width: 8px; height: 8px; background: var(--terracotta); border-radius: 50%; }
+  .badge-section .label { font-family: 'Montserrat', sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-mute); font-weight: 600;}
+  .legal { background: var(--cream-soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; font-family: 'Montserrat', sans-serif; font-size: 12px; color: var(--ink-mute); line-height: 1.6; margin-top: 18px;}
+  .legal strong { color: var(--ink-soft); }
+  .access-tabs { display:flex; gap: 8px; margin-bottom: 14px;}
+  .access-tabs button { flex:1; padding: 10px; font-size: 12px; font-family: 'Montserrat', sans-serif; font-weight: 600; border: 1px solid var(--line); background: #fff; border-radius: 8px; cursor: pointer; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em;}
+  .access-tabs button.active { background: var(--burgundy); color: #fff; border-color: var(--burgundy);}
+  .loader { display: inline-block; width: 14px; height: 14px; border: 2px solid var(--line); border-top-color: var(--burgundy); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px;}
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .checkmark { color: var(--green-deep); font-weight: 600; font-family: 'Montserrat', sans-serif; font-size: 13px;}
+  .submitting { color: var(--ink-mute); font-family: 'Montserrat', sans-serif; font-size: 13px;}
+  details summary { cursor: pointer; color: var(--ink-mute); font-family: 'Montserrat', sans-serif; font-size: 13px;}
+  .low-score-msg { background: var(--cream-soft); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; margin: 16px 0; font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+  .low-score-msg strong { color: var(--burgundy); }
+</style>
+</head>
+<body>
+
+<div class="brand-bar">
+  <span><strong>Edith Lando</strong> · Mapa de Activadores</span>
+  <span class="right">Taller Motivación Final de Curso</span>
+</div>
+
+<div class="container">
+
+<!-- ======================== PANTALLA 1: ACCESO ======================== -->
+<section id="screen-lock">
+  <div class="card">
+    <span class="pill">Acceso privado</span>
+    <h1 style="margin-top:14px;">Mapa de Activadores</h1>
+    <p class="lead">Una herramienta de auto-reflexión para entender qué motor te mueve a ti, cuál mueve a tu hijo o hija y por qué cuanto más insistes, más se cierra.</p>
+
+    <hr class="soft">
+
+    <div class="access-tabs">
+      <button id="tab-taller" class="active" onclick="setAccessType('taller')">Compré el taller</button>
+      <button id="tab-campus" onclick="setAccessType('campus')">Soy del Campus</button>
+    </div>
+
+    <label class="field-label" for="email">Tu email</label>
+    <div class="field-wrap">
+      <input type="email" id="email" placeholder="el mismo con el que te apuntaste" autocomplete="email">
+      <div class="field-error" id="err-email">Escribe un email válido (ej: nombre@dominio.com)</div>
+    </div>
+
+    <div id="campus-code-block" class="hidden">
+      <label class="field-label" for="codigo">Tu código del Campus</label>
+      <div class="field-wrap">
+        <input type="text" id="codigo" placeholder="el código que te llega cada mes" autocomplete="off">
+        <div class="field-error" id="err-codigo">Necesitas el código del Campus para acceder</div>
+      </div>
+      <p class="tip">Este código solo es válido si tu suscripción al Campus está activa.</p>
+    </div>
+
+    <label class="field-label" for="whatsapp">Tu WhatsApp</label>
+    <div class="field-wrap">
+      <input type="tel" id="whatsapp" placeholder="+34 600 00 00 00" autocomplete="tel">
+      <div class="field-error" id="err-whatsapp">Formato internacional requerido, ej: +34600000000</div>
+    </div>
+    <p class="tip">Lo usamos solo para acompañarte en este taller. No vamos a saturarte.</p>
+
+    <div id="email-error" class="error-msg hidden"></div>
+
+    <div style="margin-top: 18px; display:flex; gap:10px; align-items:center;">
+      <button class="btn" id="btn-access" onclick="checkAccess()">Acceder</button>
+      <span class="muted">Tarda 3 minutos</span>
+    </div>
+
+    <div class="legal">
+      <strong>Esto NO es una prueba psicométrica</strong> ni sustituye terapia, orientación profesional o consejo médico. Es una herramienta de auto-reflexión basada en el marco de activadores motivacionales que trabajamos en el taller.
+      <br><br>
+      <strong>Tus datos</strong> (email y WhatsApp) se usan únicamente para acompañarte en el Taller Motivación Final de Curso y, si lo deseas, informarte de futuras formaciones. No los compartimos con terceros. Puedes pedir su eliminación en cualquier momento escribiendo a <a href="mailto:info@edithlando.es" style="color: var(--burgundy);">info@edithlando.es</a>.
+    </div>
+
+    <details style="margin-top: 18px;">
+      <summary>¿No te deja entrar?</summary>
+      <p class="muted" style="margin-top:10px;">Si compraste el taller o eres del Campus y este email te da error, escríbeme a <a href="mailto:info@edithlando.es">info@edithlando.es</a>. A veces el email del pago y el del registro son distintos, o el código del Campus se ha renovado.</p>
+    </details>
+  </div>
+  <div class="footer-note">Esta herramienta no sustituye el taller. Es un mapa de entrada, no el camino completo.</div>
+</section>
+
+<!-- ======================== PANTALLA: BIENVENIDA ======================== -->
+<section id="screen-welcome" class="hidden">
+  <div class="card">
+    <span class="pill">Antes de empezar</span>
+    <h1 style="margin-top:14px;">Vas a hacer dos cosas distintas</h1>
+    <p class="lead">Primero, 8 frases sobre <strong>ti</strong> (cómo entiendes el esfuerzo, el vínculo, el orden). Después, 8 frases sobre <strong>tu hijo o hija</strong> (qué le mueve en este momento, no en general).</p>
+    <hr class="soft">
+    <div class="row"><span class="icon">🪞</span><div class="body"><span class="lbl">Recomendación</span>Responde rápido. Lo primero que sientes suele ser lo más certero.</div></div>
+    <div class="row"><span class="icon">⏳</span><div class="body"><span class="lbl">Duración</span>3 minutos en total. Si tardas más, estás pensándolo demasiado.</div></div>
+    <div class="row"><span class="icon">🤍</span><div class="body"><span class="lbl">Importante</span>No hay activadores buenos o malos. Tampoco hay madres ni hijos correctos. Solo hay choques o encajes.</div></div>
+    <div style="margin-top: 24px;"><button class="btn" onclick="startTestMadre()">Empezar &rarr;</button></div>
+  </div>
+</section>
+
+<!-- ======================== PANTALLA: TEST MADRE ======================== -->
+<section id="screen-test-madre" class="hidden">
+  <div class="card">
+    <div class="badge-section"><span class="dot"></span><span class="label">Parte 1 de 2 · Sobre ti</span></div>
+    <div class="progress"><div id="prog-madre"></div></div>
+    <div id="q-madre-meta" class="q-meta"></div>
+    <div id="q-madre-text" class="question-text"></div>
+    <p class="tip">Lee cada frase con calma y puntúa del 1 al 5 cuánto te identificas. Piensa en cómo ERES tú, no en cómo te gustaría ser.</p>
+    <div class="scale" id="scale-madre"></div>
+    <div class="scale-labels"><span>Nada me identifica</span><span>Totalmente me identifica</span></div>
+    <div style="margin-top:22px; display:flex; gap: 8px; justify-content: space-between;">
+      <button class="btn secondary" id="btn-madre-back" onclick="prevMadre()">&larr; Anterior</button>
+      <button class="btn" id="btn-madre-next" onclick="nextMadre()" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== PANTALLA: TRANSICIÓN ======================== -->
+<section id="screen-transition" class="hidden">
+  <div class="card" style="text-align: center; padding: 40px 28px;">
+    <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+    <span class="pill green" style="margin-bottom: 16px; display: inline-block;">Primera parte completada</span>
+    <h1 style="margin-top: 16px; margin-bottom: 12px;">Ahora, tu hijo o hija</h1>
+    <p class="lead" style="max-width: 480px; margin: 0 auto 24px;">Has respondido sobre ti. Ahora vas a hacer lo mismo pero <strong>observando a tu hijo o hija</strong> en este último mes — no como era de pequeño/a, no como te gustaría que fuera. Como está siendo ahora.</p>
+    <hr class="soft">
+    <div class="row" style="text-align: left; max-width: 420px; margin: 0 auto 12px;">
+      <span class="icon">🧠</span>
+      <div class="body"><span class="lbl">Recuerda</span>No hay respuestas correctas. Cuanto más honesta seas con lo que ves en él, más útil será la lectura final.</div>
+    </div>
+    <div class="row" style="text-align: left; max-width: 420px; margin: 0 auto 24px;">
+      <span class="icon">⚡</span>
+      <div class="body"><span class="lbl">Son solo 8 frases más</span>Responde rápido. El primer impulso es casi siempre el más certero.</div>
+    </div>
+    <button class="btn" onclick="startTestHijo()">Seguir con tu hijo o hija &rarr;</button>
+  </div>
+</section>
+
+<!-- ======================== PANTALLA: TEST HIJO ======================== -->
+<section id="screen-test-hijo" class="hidden">
+  <div class="card">
+    <div class="badge-section"><span class="dot"></span><span class="label">Parte 2 de 2 · Sobre tu hijo o hija</span></div>
+    <div class="progress"><div id="prog-hijo"></div></div>
+    <div id="q-hijo-meta" class="q-meta"></div>
+    <div id="q-hijo-text" class="question-text"></div>
+    <p class="tip">Ahora piensa en TU hijo o hija, no en cómo te gustaría que fuera. Puntúa del 1 al 5 cuánto te suena cada frase observándolo/a.</p>
+    <div class="scale" id="scale-hijo"></div>
+    <div class="scale-labels"><span>Nada me suena</span><span>Totalmente le describe</span></div>
+    <div style="margin-top:22px; display:flex; gap: 8px; justify-content: space-between;">
+      <button class="btn secondary" id="btn-hijo-back" onclick="prevHijo()">&larr; Anterior</button>
+      <button class="btn" id="btn-hijo-next" onclick="nextHijo()" disabled>Siguiente &rarr;</button>
+    </div>
+  </div>
+</section>
+
+<!-- ======================== PANTALLA: RESULTADO ======================== -->
+<section id="screen-result" class="hidden">
+  <div class="result-headline">
+    <span class="pill">Tu lectura</span>
+    <h1 style="margin: 14px 0 6px;">Lo que está chocando entre vosotros</h1>
+    <p class="muted" style="margin-bottom: 6px;">Tu activador dominante <span class="arrow">→</span> el de tu hijo o hija</p>
+    <div class="pair">
+      <div class="activator-tag"><span class="lbl">Tú</span><span class="val" id="r-madre-name">—</span></div>
+      <span class="arrow">⇄</span>
+      <div class="activator-tag"><span class="lbl">Tu hijo/a</span><span class="val" id="r-hijo-name">—</span></div>
+    </div>
+    <p id="r-madre-tagline" class="muted" style="margin-top:14px;"></p>
+  </div>
+
+  <div id="low-score-block" class="low-score-msg hidden">
+    <strong>Tu perfil mezcla varios activadores</strong> — no hay uno que destaque con claridad sobre los demás. Eso no es un problema, es información: en la Clase 2 lo trabajamos juntas para afinar la lectura.
+  </div>
+
+  <div id="result-detail-block">
+    <div class="card">
+      <span class="pill terra">La dinámica concreta</span>
+      <h2 id="r-headline" style="margin-top:14px;">—</h2>
+      <div class="insight" id="r-pensamiento">—</div>
+      <div class="row"><span class="icon">⚠️</span><div class="body"><span class="lbl">Tu error típico (sin culpa, con criterio)</span><span id="r-error">—</span></div></div>
+      <div class="row"><span class="icon">🎯</span><div class="body"><span class="lbl">Tu estrategia clave</span><span id="r-estrategia">—</span></div></div>
+    </div>
+
+    <div class="card">
+      <span class="pill green">3 acciones para esta semana</span>
+      <h2 style="margin-top:14px;">Pequeñas. Concretas. Que no dependen de tu desgaste.</h2>
+      <p>Estas tres acciones están elegidas según el activador dominante de tu hijo o hija. No son trucos. Son formas de hablar el idioma motivacional que él o ella sí escucha.</p>
+      <ol class="actions-list" id="r-acciones"></ol>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="pill">Donde se profundiza</span>
+    <h2 style="margin-top:14px;">Esto es solo el inicio del trabajo</h2>
+    <p>El choque que acabas de leer es el QUÉ está pasando. En el taller trabajamos el CUÁL: cuál es exactamente el patrón en tu caso, cuál es el siguiente paso operativo, cuál es la conversación de reactivación específica que tu hijo o hija necesita escuchar de ti en este final de curso.</p>
+    <div style="margin-top: 14px; display:flex; gap: 8px; flex-wrap: wrap;">
+      <button class="btn green" onclick="goMap()">Ver el mapa de los 8 activadores &rarr;</button>
+      <button class="btn secondary" onclick="restart()">Volver a empezar</button>
+    </div>
+  </div>
+
+  <div class="card" style="text-align: center;">
+    <h3 style="margin-bottom: 8px;">¿Todo listo?</h3>
+    <p>Cuando hayas leído tu resultado, pulsa el botón para guardar tu lectura y que quede registrada antes de la Clase 2.</p>
+    <div style="margin-top: 16px;">
+      <button class="btn" id="btn-finalizar" onclick="finalize()">Finalizar y guardar mi lectura</button>
+    </div>
+    <div id="r-finalize-status" class="muted" style="margin-top: 12px;"></div>
+  </div>
+
+  <div class="legal">
+    Esto es una herramienta de auto-reflexión, <strong>no una prueba psicométrica</strong>. No sustituye terapia, orientación profesional ni consejo médico. Si necesitas apoyo profesional, escribe a <a href="mailto:info@edithlando.es" style="color: var(--burgundy);">info@edithlando.es</a>.
+  </div>
+</section>
+
+<!-- ======================== PANTALLA: MAPA ======================== -->
+<section id="screen-map" class="hidden">
+  <div class="card">
+    <span class="pill">Mapa</span>
+    <h1 style="margin-top:14px;">Los 8 activadores motivacionales</h1>
+    <p class="lead">Cada persona tiene un activador dominante. No es fijo: cambia con la edad, el contexto, el momento del año. Lo que NO cambia es que cuando intentas motivar a alguien desde tu activador y no desde el suyo, el mensaje no entra.</p>
+  </div>
+  <div class="map-grid" id="map-grid"></div>
+  <div class="card" style="margin-top: 16px;">
+    <h3>Cómo usar este mapa</h3>
+    <p>1. Identifica tu activador dominante (ya lo tienes del ejercicio).</p>
+    <p>2. Identifica el de tu hijo o hija en este momento. Puede no ser el de siempre. Mayo activa en muchos adolescentes diversión, autonomía y conexión.</p>
+    <p>3. Antes de hablarle de algo importante, traduce tu mensaje al idioma de su activador. No al tuyo.</p>
+    <div style="margin-top: 18px; display:flex; gap: 8px; flex-wrap: wrap;">
+      <button class="btn secondary" onclick="goResult()">&larr; Volver al resultado</button>
+      <button class="btn" onclick="restart()">Volver a empezar</button>
+    </div>
+  </div>
+  <p class="footer-note">Edith Lando · <a href="https://www.edithlando.es" target="_blank" rel="noopener">www.edithlando.es</a> · <a href="mailto:info@edithlando.es">info@edithlando.es</a></p>
+</section>
+
+<p class="footer-note">Mapa de Activadores · Bonus exclusivo del Taller Motivación Final de Curso · Mayo 2026 · © Edith Lando</p>
+
+</div>
+
+<script>
+// =================================================================
+// CONFIGURACIÓN
+// =================================================================
+const MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/e5gr2kyku3rqhaugf53367aoldpst8jq";
+const ADMIN_EMAILS = ["edith@metodolando.com", "info@edithlando.es"];
+
+// Orden de prioridad para desempates (primero en la lista gana)
+const TIEBREAK_ORDER = ["Logro", "Autonomía", "Conexión", "Pertenencia", "Seguridad", "Diversión", "Aportación", "Poder"];
+
+// =================================================================
+// PREGUNTAS MADRE — orden recomendado: 3·7·1·5·2·8·4·6
+// (mezclado para que no se infiera el activador)
+// =================================================================
+const QUESTIONS_MADRE = [
+  { activador: "Logro",       text: "Me siento bien cuando mi hijo cumple con lo que tiene que hacer y veo resultados claros (notas, esfuerzo, constancia)." },
+  { activador: "Conexión",    text: "Lo que más valoro es la relación con mi hijo: que hablemos, que me cuente, sentir que estamos cerca." },
+  { activador: "Seguridad",   text: "Antes de tomar decisiones sobre mi hijo, necesito tener claro que va a estar bien y que el riesgo es bajo." },
+  { activador: "Poder",       text: "Necesito que mi hijo me respete y que las normas que ponemos en casa se cumplan tal y como las hemos pactado." },
+  { activador: "Pertenencia", text: "Lo que más me importa es que mi hijo se sienta parte de un grupo, que tenga buenos amigos y encaje." },
+  { activador: "Aportación",  text: "Me importa mucho que mi hijo aprenda a ser útil, a aportar a los demás y a darle sentido a lo que hace." },
+  { activador: "Autonomía",   text: "Para mí lo importante es que mi hijo aprenda a decidir y resolver por sí mismo, aunque a veces se equivoque." },
+  { activador: "Diversión",   text: "Disfruto cuando hay buen ambiente en casa y mi hijo está contento, aunque a veces se relaje con sus obligaciones." }
+];
+
+// =================================================================
+// PREGUNTAS HIJO — orden recomendado: 6·2·8·4·1·7·3·5
+// =================================================================
+const QUESTIONS_HIJO = [
+  { activador: "Diversión",   text: "Mi hijo busca pasarlo bien y evita lo aburrido o esforzado; prioriza lo que le gusta sobre lo que toca." },
+  { activador: "Pertenencia", text: "Para mi hijo, encajar con sus amigos y sentirse parte del grupo es lo más importante en este momento." },
+  { activador: "Aportación",  text: "Mi hijo se mueve por causas o ideas; le importa el sentido de lo que hace y querer aportar a algo más grande." },
+  { activador: "Autonomía",   text: "Mi hijo necesita sentir que decide él; reacciona mal cuando le decimos qué tiene que hacer." },
+  { activador: "Seguridad",   text: "Mi hijo evita las situaciones nuevas o que le ponen nervioso; prefiere lo conocido a arriesgarse." },
+  { activador: "Conexión",    text: "Mi hijo busca relaciones cercanas y conversaciones de tú a tú; se mueve por afecto y vínculos profundos." },
+  { activador: "Logro",       text: "Mi hijo se motiva con metas claras y resultados visibles (notas, partidos ganados, retos cumplidos)." },
+  { activador: "Poder",       text: "Mi hijo se fija mucho en quién manda en cada espacio; le importa su posición y que se le tome en serio." }
+];
+
+// =================================================================
+// MATRIZ 8×8 DE COMBINACIONES (madre × hijo)
+// =================================================================
+const MATRIX = {
+  "Seguridad": {
+    "Seguridad":   { resumen: "No hay choque fuerte", error: "sobreproteger", pensamiento: '"Mi madre se preocupa demasiado."', estrategia: "rutinas compartidas y previsibles" },
+    "Pertenencia": { resumen: "M orden–A emociones", error: "M evita conflicto", pensamiento: '"No te importa cómo me siento."', estrategia: "validar emociones ANTES de organizar" },
+    "Logro":       { resumen: "M exige constancia–A quiere avanzar", error: "M presiona", pensamiento: '"Nunca es suficiente."', estrategia: "objetivos mínimos claros" },
+    "Autonomía":   { resumen: "Choque fuerte: estructura vs libertad", error: "M controla", pensamiento: '"Me agobias."', estrategia: "M da estructura, A decide el cómo" },
+    "Poder":       { resumen: "M estructura–A lidera", error: "M se siente desobedecida", pensamiento: '"Quiero decidir."', estrategia: "dar microespacios de responsabilidad" },
+    "Diversión":   { resumen: "M orden–A diversión", error: "M interpreta irresponsabilidad", pensamiento: '"Solo quieres que sea perfecto."', estrategia: "alternar tareas–microplaceres" },
+    "Conexión":    { resumen: "M piensa en orden–A en vínculo", error: "M corta conversaciones", pensamiento: '"No eres cercana."', estrategia: "5 minutos de conexión antes de ordenar" },
+    "Aportación":  { resumen: "M orden–A impacto social", error: "M minimiza sus deseos de ayudar", pensamiento: '"Lo mío no importa."', estrategia: "involucrarlo en tareas de ayuda familiar" }
+  },
+  "Pertenencia": {
+    "Seguridad":   { resumen: "M busca armonía–A orden", error: "M se desborda emocionalmente", pensamiento: '"No dramatices."', estrategia: "1 emoción + 1 acción concreta" },
+    "Pertenencia": { resumen: "RELACIÓN MÁS FÁCIL", error: "M se fusiona demasiado", pensamiento: '"Déjame respirar."', estrategia: "amor sin sobreinvasión" },
+    "Logro":       { resumen: "M conexión–A resultados", error: "M sermonea", pensamiento: '"No me escuchas, quieres que sea perfecto."', estrategia: "acuerdos y no discursos" },
+    "Autonomía":   { resumen: "M busca vínculo–A libertad", error: "M insiste demasiado", pensamiento: '"Me atosigas."', estrategia: "conexión breve y frecuente, no intensa" },
+    "Poder":       { resumen: "M suaviza–A afirma poder", error: "M cede para evitar conflicto", pensamiento: '"Puedo imponerte."', estrategia: "límites firmes con tono neutro" },
+    "Diversión":   { resumen: "M conexión–A placer", error: "M moraliza la diversión", pensamiento: '"No me entiendes."', estrategia: "negociar 1 tarea → 1 actividad disfrutable" },
+    "Conexión":    { resumen: "RELACIÓN PROFUNDA", error: "M sobrelee señales", pensamiento: '"No soy tu amiga."', estrategia: "conexión sin invadir su intimidad" },
+    "Aportación":  { resumen: "M emociones–A contribución", error: "M monopoliza la conversación", pensamiento: '"No me dejas aportar."', estrategia: "pedir su opinión, darle rol de participación" }
+  },
+  "Logro": {
+    "Seguridad":   { resumen: "M metas–A orden", error: "M exige demasiado", pensamiento: '"Soy un proyecto."', estrategia: "metas realistas y progresivas" },
+    "Pertenencia": { resumen: "M metas–A vínculo", error: "M invalida emociones", pensamiento: '"Lo mío es secundario."', estrategia: "escuchar 3 minutos antes de pedir resultados" },
+    "Logro":       { resumen: "RELACIÓN NATURALMENTE RÁPIDA", error: "M compite con su hijo", pensamiento: '"Nunca gano."', estrategia: "celebrar sin comparar" },
+    "Autonomía":   { resumen: "M estructura–A libertad", error: "M impone rutinas rígidas", pensamiento: '"Me controlas."', estrategia: "metas flexibles, no horarios fijos" },
+    "Poder":       { resumen: "M metas–A liderazgo", error: "M corrige constantemente", pensamiento: '"Déjame hacerlo."', estrategia: "pedir su plan primero" },
+    "Diversión":   { resumen: "CHOQUE MÁS COMÚN", error: "M ridiculiza lo que disfruta", pensamiento: '"Solo me quieres productivo."', estrategia: "usar la diversión como puerta de entrada" },
+    "Conexión":    { resumen: "M logros–A vínculo", error: "M invalida tiempo emocional", pensamiento: '"Nunca tienes tiempo."', estrategia: "ritual breve de conexión diaria" },
+    "Aportación":  { resumen: "M excelencia–A impacto", error: "M ignora deseos de ayudar", pensamiento: '"No valoras mis iniciativas."', estrategia: "proponerle proyectos con propósito" }
+  },
+  "Autonomía": {
+    "Seguridad":   { resumen: "M libertad–A estructura", error: "M parece ausente", pensamiento: '"No te importa."', estrategia: "dar estructura mínima" },
+    "Pertenencia": { resumen: "M independencia–A vínculo", error: "M evita conversaciones", pensamiento: '"Me ignoras."', estrategia: "conexión breve y clara" },
+    "Logro":       { resumen: "M libertad–A progreso", error: "M delega demasiado", pensamiento: '"Ayúdame un poco."', estrategia: "dar pasos claros sin intervenir" },
+    "Autonomía":   { resumen: "RELACIÓN FLUIDA", error: "M desconecta emocionalmente", pensamiento: '"Cada uno va por su lado."', estrategia: "ritual de autonomía compartida" },
+    "Poder":       { resumen: "M libertad–A poder", error: "M cede demasiado", pensamiento: '"Puedo hacer lo que quiera."', estrategia: "límites claros + libertad dentro de límites" },
+    "Diversión":   { resumen: "M independencia–A placer", error: "M minimiza su mundo", pensamiento: '"Paso de hablar contigo."', estrategia: "involucrarse sin invadir" },
+    "Conexión":    { resumen: "M independiente–A vínculo", error: "M corta conversación", pensamiento: '"No te importo."', estrategia: "5 min de presencia total" },
+    "Aportación":  { resumen: "M independencia–A aporte", error: "M no ve su necesidad de impacto", pensamiento: '"No ves quién soy."', estrategia: "pedirle colaboración concreta" }
+  },
+  "Poder": {
+    "Seguridad":   { resumen: "M directiva–A estructura", error: "M autoritaria", pensamiento: '"No puedo decidir nada."', estrategia: "dar microdecisiones" },
+    "Pertenencia": { resumen: "M directiva–A emocional", error: "M invalida emociones", pensamiento: '"Eres dura."', estrategia: "firmeza + calidez" },
+    "Logro":       { resumen: "M exigente–A metas", error: "M aplasta", pensamiento: '"No soy suficiente."', estrategia: "liderar desde ejemplo, no desde exigencia" },
+    "Autonomía":   { resumen: "Choque fuerte", error: "M ordena, A se rebela", pensamiento: '"No me mandas."', estrategia: "acuerdos claros y no luchas de poder" },
+    "Poder":       { resumen: "EXPLOSIVO", error: "Choque de egos", pensamiento: '"Compito contigo."', estrategia: "repartir liderazgo" },
+    "Diversión":   { resumen: "M firme–A placer", error: "M ridiculiza", pensamiento: '"No empatizas."', estrategia: "humor como puente" },
+    "Conexión":    { resumen: "M directiva–A vínculo", error: "M va al grano", pensamiento: '"No te importo."', estrategia: "preguntarle primero cómo está" },
+    "Aportación":  { resumen: "M líder–A impacto", error: "M acapara protagonismo", pensamiento: '"No me dejas brillar."', estrategia: "darle un rol importante" }
+  },
+  "Diversión": {
+    "Seguridad":   { resumen: "M desenfadada–A orden", error: "M no sostiene límites", pensamiento: '"No eres seria."', estrategia: "estructura ligera" },
+    "Pertenencia": { resumen: "M lúdica–A emocional", error: "M minimiza emociones", pensamiento: '"No me tomas en serio."', estrategia: "validar y después jugar" },
+    "Logro":       { resumen: "M espontánea–A metas", error: "M dispersa", pensamiento: '"No me ayudas a avanzar."', estrategia: "ritual corto de organización" },
+    "Autonomía":   { resumen: "RELACIÓN FÁCIL", error: "M huye de profundidad", pensamiento: '"No quieres hablar en serio."', estrategia: "1 conversación profunda a la semana" },
+    "Poder":       { resumen: "M divertida–A poder", error: "M entra en lucha burlona", pensamiento: '"Te ríes de mí."', estrategia: "humor sin ironía" },
+    "Diversión":   { resumen: "RELACIÓN NATURAL", error: "M exceso de permisividad", pensamiento: '"No pasa nada."', estrategia: "límites claros con tono alegre" },
+    "Conexión":    { resumen: "M diversión–A vínculo", error: "M evita temas serios", pensamiento: '"No me escuchas."', estrategia: "5 minutos de escucha profunda" },
+    "Aportación":  { resumen: "M diversión–A aportación", error: "M ridiculiza su sensibilidad", pensamiento: '"No respetas lo que me importa."', estrategia: "apoyar sus causas" }
+  },
+  "Conexión": {
+    "Seguridad":   { resumen: "M vínculo–A orden", error: "M se desregula si no hablan", pensamiento: '"Necesito espacio."', estrategia: "conexión breve y estable" },
+    "Pertenencia": { resumen: "RELACIÓN NATURAL", error: "M se fusiona", pensamiento: '"No me escuchas, me absorbes."', estrategia: "poner límites afectivos" },
+    "Logro":       { resumen: "M conexión–A metas", error: "M habla demasiado", pensamiento: '"No avanzamos."', estrategia: "escuchar + un paso concreto" },
+    "Autonomía":   { resumen: "M vínculo–A libertad", error: "M dramatiza distancia", pensamiento: '"No pasa nada, solo necesito espacio."', estrategia: "conexión ligera sin juicio" },
+    "Poder":       { resumen: "M conexión profunda–A poder", error: "M se somete emocionalmente", pensamiento: '"Puedo manipularte."', estrategia: "firmeza emocional" },
+    "Diversión":   { resumen: "M conexión–A placer", error: "M sermonea", pensamiento: '"Déjame vivir."', estrategia: "conversaciones breves sin tono moral" },
+    "Conexión":    { resumen: "RELACIÓN PROFUNDA", error: "M invade", pensamiento: '"Necesito intimidad."', estrategia: "presencia sin invasión" },
+    "Aportación":  { resumen: "M conexión–A aporte", error: "M sentimentaliza", pensamiento: '"Quiero hacer, no hablar."', estrategia: "darle proyectos de ayuda" }
+  },
+  "Aportación": {
+    "Seguridad":   { resumen: "M propósito–A orden", error: "M subestima su necesidad de estructura", pensamiento: '"Es demasiado."', estrategia: "bajar expectativas y dar un marco claro" },
+    "Pertenencia": { resumen: "M propósito–A vínculo", error: "M da demasiado", pensamiento: '"Déjame respirar."', estrategia: "contribuir sin absorber" },
+    "Logro":       { resumen: "M propósito–A metas", error: "M presiona con ideales", pensamiento: '"Nunca llego a tu nivel."', estrategia: "metas humanas, no ideales" },
+    "Autonomía":   { resumen: "M aportación–A libertad", error: "M fuerza sentido", pensamiento: '"No quiero profundidad ahora."', estrategia: "dejar espacio, ofrecer significado cuando él lo pida" },
+    "Poder":       { resumen: "M propósito–A poder", error: "M invade su territorio", pensamiento: '"No te metas."', estrategia: "pedir permiso antes de orientar" },
+    "Diversión":   { resumen: "M ideal–A placer", error: "M moraliza", pensamiento: '"Me juzgas."', estrategia: "unir propósito + disfrute" },
+    "Conexión":    { resumen: "M aporte–A vínculo", error: "M sermonea", pensamiento: '"No quiero profundidad constante."', estrategia: "conexión ligera y luego reflexión" },
+    "Aportación":  { resumen: "RELACIÓN HERMOSA", error: "M exige demasiado altruismo", pensamiento: '"No soy como tú."', estrategia: "validar su forma única de aportar" }
+  }
+};
+
+// =================================================================
+// 3 ACCIONES POR ACTIVADOR DEL HIJO
+// =================================================================
+const ACCIONES_POR_HIJO = {
+  "Seguridad": [
+    "Avísale con 24h de antelación cualquier cambio de plan importante. Le rebaja la ansiedad de fondo.",
+    "Crea un mini-ritual fijo esta semana: cena del jueves, paseo del sábado por la mañana. Algo que NO falle.",
+    "Antes de pedirle algo importante, dale estructura: «el martes a las 19h te quiero pedir 15 minutos para hablar de X»."
+  ],
+  "Pertenencia": [
+    "Antes de pedir nada operativo (deberes, tareas), valida una emoción suya: «te veo cansado, ¿estás bien?».",
+    "Cuando haya tensión, no hables de la conducta. Habla del vínculo: «no quiero que esto nos separe».",
+    "Una sola frase puente al día: algo que diga «estamos bien aún siendo distintos»."
+  ],
+  "Logro": [
+    "Pon un reto concreto y medible para esta semana, no para «el curso». Algo que pueda terminar.",
+    "Celebra el proceso, no solo el resultado: «has estudiado 40 minutos seguidos, eso es difícil».",
+    "Pídele que te enseñe algo en lo que sea bueno (un videojuego, una serie, un tema). Activas su motor de competencia desde el respeto."
+  ],
+  "Autonomía": [
+    "Cambia «haz X» por «tú decides cuándo y cómo, pero tiene que estar el viernes». Da el qué, suelta el cómo.",
+    "Pregunta antes de aconsejar: «¿quieres que te diga lo que pienso o que solo te escuche?». Y cumple lo que él pida.",
+    "Reduce un control esta semana. Uno solo. El que él más siente como invasivo. Y observa qué pasa."
+  ],
+  "Poder": [
+    "Dale el liderazgo de algo concreto en casa: el plan del finde, la cena del sábado, la decisión de los exámenes.",
+    "En vez de imponer, negocia con dos opciones que tú ya aceptarías. Que él elija dentro de tu marco.",
+    "Cuando se ponga retador, no compitas. Pásale la decisión: «tú decides. Y asumes lo que venga»."
+  ],
+  "Diversión": [
+    "Empieza la semana con un plan disfrutable juntos sin agenda. Solo placer. No es premio, es puente.",
+    "Antes de pedirle algo difícil, dale algo agradable. Tarea ↔ recompensa concreta y visible.",
+    "Suaviza el tono. Si todo está siendo exigencia, una broma vale más que un sermón. El humor es entrada, no banalización."
+  ],
+  "Conexión": [
+    "5 minutos al día solo para vosotros. Sin móvil. Sin tema. Solo presencia.",
+    "Cambia preguntas operativas por preguntas de vínculo: «¿qué te ha removido hoy?», «¿qué te está costando?».",
+    "Ten un ritual semanal de «cómo estamos él y yo». 10 minutos los domingos. No es terapia, es conexión."
+  ],
+  "Aportación": [
+    "Conecta lo que tiene que hacer con un sentido más grande: «esto te sirve para X que te importa».",
+    "Dale un rol de cuidado: que aporte a alguien (un animal, un hermano, un abuelo, una causa). Necesita sentirse útil.",
+    "Pídele su opinión sobre algo serio en casa. Que vea que su criterio cuenta y que tú lo tienes en cuenta."
+  ]
+};
+
+// =================================================================
+// TAGLINES MADRE
+// =================================================================
+const TAGLINES_MADRE = {
+  "Seguridad":   "Operas desde la estructura: necesitas que las cosas estén bajo control para sentirte bien.",
+  "Pertenencia": "Operas desde el vínculo: priorizas la armonía emocional por encima de casi todo.",
+  "Logro":       "Operas desde el avance: la métrica de tu día es cuánto se ha hecho y cuánto falta.",
+  "Autonomía":   "Operas desde la libertad: cada uno gestiona lo suyo, tú das aire.",
+  "Poder":       "Operas desde la dirección: lideras, marcas el rumbo, te cuesta soltar el control.",
+  "Diversión":   "Operas desde el disfrute: bajas tensión con humor y aligeras lo pesado.",
+  "Conexión":    "Operas desde la intimidad: necesitas sentir que la relación está bien para estar bien.",
+  "Aportación":  "Operas desde el propósito: lo que hace falta es que esto sirva para algo más grande."
+};
+
+// =================================================================
+// INFO COMPLETA DE LOS 8 ACTIVADORES (para el mapa)
+// =================================================================
+const ACTIVADORES_INFO = {
+  "Seguridad":   { def: "Necesita previsibilidad, estructura y rutina para sentirse bien. La incertidumbre le desestabiliza más que a otros.", senales: "Pregunta mucho por planes, se altera con cambios de última hora, le tranquilizan los rituales fijos.", puente: "Avisa con antelación. Pon estructura mínima clara antes de pedir esfuerzo." },
+  "Pertenencia": { def: "Funciona por vínculo y armonía emocional. Lee el clima del grupo y le afecta más que cualquier dato objetivo.", senales: "Se cierra cuando hay tensión, le importa muchísimo el grupo de amigos, evita el conflicto.", puente: "Habla del vínculo antes que de la conducta: «no quiero que esto nos separe»." },
+  "Logro":       { def: "Se mueve por reto, progreso, sentirse capaz. La meta visible es lo que le activa.", senales: "Le gusta ganar, comparar, ver avance. Se hunde si siente que no llega o que nunca es suficiente.", puente: "Pon metas pequeñas, medibles, visibles. Celebra el proceso, no solo el resultado." },
+  "Autonomía":   { def: "Necesita decidir cómo, cuándo y a su manera. La presión y el control le activan rebeldía o cierre.", senales: "Se rebela ante normas no negociadas, prefiere hacer las cosas a su modo aunque sea menos eficiente.", puente: "Da el qué, deja el cómo. Pregunta antes de aconsejar. «Tú decides cuándo, pero el viernes está hecho.»" },
+  "Poder":       { def: "Necesita liderar, mandar en lo suyo, sentir que su criterio cuenta. No es manipulación: es motor real.", senales: "Discute, reta, propone alternativas, no acepta autoridad sin negociar.", puente: "Dale liderazgo sobre algo concreto. Negocia con dos opciones que tú aceptarías." },
+  "Diversión":   { def: "Se mueve por disfrute, alivio, placer presente. En final de curso este activador domina en muchos adolescentes.", senales: "Prioriza planes con amigos, evita el esfuerzo sin recompensa visible, busca el alivio inmediato.", puente: "Suaviza el tono. Une tarea ↔ recompensa. Una broma vale más que un sermón." },
+  "Conexión":    { def: "Funciona por intimidad emocional profunda. Necesita sentir que la relación contigo está bien.", senales: "Se desregula si percibe distancia emocional, busca conversaciones profundas, le afecta tu estado de ánimo.", puente: "5 minutos diarios de presencia total. Pregunta de vínculo, no operativa: «¿qué te ha removido hoy?»" },
+  "Aportación":  { def: "Se mueve por propósito y sentir que cambia algo del mundo. Necesita que lo suyo importe.", senales: "Le interesan causas, animales, justicia, deporte con sentido. Le cuesta lo que percibe como vacío.", puente: "Conecta lo que tiene que hacer con un sentido más grande. Dale un rol de cuidado." }
+};
+
+// =================================================================
+// NAVEGACIÓN
+// =================================================================
+const SCREENS = ["screen-lock", "screen-welcome", "screen-test-madre", "screen-transition", "screen-test-hijo", "screen-result", "screen-map"];
+function showScreen(id) {
+  SCREENS.forEach(s => document.getElementById(s).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function normEmail(e) { return (e || "").toLowerCase().trim(); }
+function normPhone(p) { return (p || "").replace(/\s+/g, "").trim(); }
+
+let userEmail = "", userWhatsApp = "", userType = "taller", userCodigo = "";
+
+function setAccessType(t) {
+  userType = t;
+  document.getElementById("tab-taller").classList.toggle("active", t === "taller");
+  document.getElementById("tab-campus").classList.toggle("active", t === "campus");
+  document.getElementById("campus-code-block").classList.toggle("hidden", t !== "campus");
+  document.getElementById("email-error").classList.add("hidden");
+}
+
+// =================================================================
+// ACCESO — solo valida campos localmente, sin backend
+// =================================================================
+function checkAccess() {
+  // Forzar validación visible en todos los campos
+  document.getElementById("email").dataset.touched    = "1";
+  document.getElementById("whatsapp").dataset.touched = "1";
+  document.getElementById("codigo").dataset.touched   = "1";
+
+  const okEmail = validateEmail(true);
+  const okWa    = validateWhatsapp(true);
+  const okCod   = validateCodigo(true);
+
+  if (!okEmail || !okWa || !okCod) return;
+
+  userEmail    = normEmail(document.getElementById("email").value);
+  userWhatsApp = normPhone(document.getElementById("whatsapp").value);
+  userCodigo   = (document.getElementById("codigo").value || "").trim();
+
+  startTestMadre();
+}
+
+// =================================================================
+// LÓGICA DE SCORING
+// =================================================================
+function dominantOf(scores) {
+  const maxVal = Math.max(...Object.values(scores));
+  // Desempate por orden de prioridad definido por Edith
+  for (const a of TIEBREAK_ORDER) {
+    if (scores[a] === maxVal) return { activador: a, score: maxVal };
+  }
+  return { activador: null, score: 0 };
+}
+
+// =================================================================
+// TEST MADRE
+// =================================================================
+let madreScores = {}, madreAnswers = [], madreIdx = 0;
+
+function startTestMadre() {
+  Object.keys(ACTIVADORES_INFO).forEach(a => madreScores[a] = 0);
+  madreAnswers = new Array(QUESTIONS_MADRE.length).fill(null);
+  madreIdx = 0;
+  showScreen("screen-test-madre");
+  renderMadre();
+}
+
+function renderMadre() {
+  const q = QUESTIONS_MADRE[madreIdx];
+  document.getElementById("q-madre-meta").textContent = `Pregunta ${madreIdx + 1} de ${QUESTIONS_MADRE.length}`;
+  document.getElementById("q-madre-text").textContent = q.text;
+  document.getElementById("prog-madre").style.width = `${(madreIdx / QUESTIONS_MADRE.length) * 100}%`;
+  const scale = document.getElementById("scale-madre");
+  scale.innerHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement("button");
+    b.textContent = i;
+    if (madreAnswers[madreIdx] === i) b.classList.add("selected");
+    b.onclick = () => { madreAnswers[madreIdx] = i; renderMadre(); document.getElementById("btn-madre-next").disabled = false; };
+    scale.appendChild(b);
+  }
+  document.getElementById("btn-madre-back").style.visibility = madreIdx === 0 ? "hidden" : "visible";
+  document.getElementById("btn-madre-next").disabled = madreAnswers[madreIdx] == null;
+  document.getElementById("btn-madre-next").textContent = madreIdx === QUESTIONS_MADRE.length - 1 ? "Pasar a tu hijo o hija →" : "Siguiente →";
+}
+
+function prevMadre() { if (madreIdx > 0) { madreIdx--; renderMadre(); } }
+function nextMadre() {
+  if (madreAnswers[madreIdx] == null) return;
+  if (madreIdx < QUESTIONS_MADRE.length - 1) {
+    madreIdx++; renderMadre();
+  } else {
+    Object.keys(ACTIVADORES_INFO).forEach(a => madreScores[a] = 0);
+    QUESTIONS_MADRE.forEach((q, i) => { madreScores[q.activador] += madreAnswers[i] || 0; });
+    showScreen("screen-transition");
+  }
+}
+
+// =================================================================
+// TEST HIJO
+// =================================================================
+let hijoScores = {}, hijoAnswers = [], hijoIdx = 0;
+
+function startTestHijo() {
+  Object.keys(ACTIVADORES_INFO).forEach(a => hijoScores[a] = 0);
+  hijoAnswers = new Array(QUESTIONS_HIJO.length).fill(null);
+  hijoIdx = 0;
+  showScreen("screen-test-hijo");
+  renderHijo();
+}
+
+function renderHijo() {
+  const q = QUESTIONS_HIJO[hijoIdx];
+  document.getElementById("q-hijo-meta").textContent = `Pregunta ${hijoIdx + 1} de ${QUESTIONS_HIJO.length}`;
+  document.getElementById("q-hijo-text").textContent = q.text;
+  document.getElementById("prog-hijo").style.width = `${(hijoIdx / QUESTIONS_HIJO.length) * 100}%`;
+  const scale = document.getElementById("scale-hijo");
+  scale.innerHTML = "";
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement("button");
+    b.textContent = i;
+    if (hijoAnswers[hijoIdx] === i) b.classList.add("selected");
+    b.onclick = () => { hijoAnswers[hijoIdx] = i; renderHijo(); document.getElementById("btn-hijo-next").disabled = false; };
+    scale.appendChild(b);
+  }
+  document.getElementById("btn-hijo-back").style.visibility = hijoIdx === 0 ? "hidden" : "visible";
+  document.getElementById("btn-hijo-next").disabled = hijoAnswers[hijoIdx] == null;
+  document.getElementById("btn-hijo-next").textContent = hijoIdx === QUESTIONS_HIJO.length - 1 ? "Ver tu lectura →" : "Siguiente →";
+}
+
+function prevHijo() { if (hijoIdx > 0) { hijoIdx--; renderHijo(); } }
+function nextHijo() {
+  if (hijoAnswers[hijoIdx] == null) return;
+  if (hijoIdx < QUESTIONS_HIJO.length - 1) {
+    hijoIdx++; renderHijo();
+  } else {
+    Object.keys(ACTIVADORES_INFO).forEach(a => hijoScores[a] = 0);
+    QUESTIONS_HIJO.forEach((q, i) => { hijoScores[q.activador] += hijoAnswers[i] || 0; });
+    showResult();
+  }
+}
+
+// =================================================================
+// RESULTADO
+// =================================================================
+let lastMadre = null, lastHijo = null;
+
+function showResult() {
+  const { activador: m, score: mScore } = dominantOf(madreScores);
+  const { activador: h, score: hScore } = dominantOf(hijoScores);
+  lastMadre = m;
+  lastHijo  = h;
+
+  document.getElementById("r-madre-name").textContent = m || "—";
+  document.getElementById("r-hijo-name").textContent  = h || "—";
+  document.getElementById("r-madre-tagline").textContent = TAGLINES_MADRE[m] || "";
+
+  const lowScoreBlock    = document.getElementById("low-score-block");
+  const resultDetailBlock = document.getElementById("result-detail-block");
+
+  // Score bajo (≤2): perfil mixto
+  if (mScore <= 2 || hScore <= 2) {
+    lowScoreBlock.classList.remove("hidden");
+    resultDetailBlock.classList.add("hidden");
+  } else {
+    lowScoreBlock.classList.add("hidden");
+    resultDetailBlock.classList.remove("hidden");
+    const cell = (MATRIX[m] && MATRIX[m][h]) || null;
+    if (cell) {
+      document.getElementById("r-headline").textContent  = cell.resumen + ".";
+      document.getElementById("r-pensamiento").textContent = "Lo que él probablemente piensa: " + (cell.pensamiento || "—");
+      document.getElementById("r-error").textContent     = cap(cell.error) + ".";
+      document.getElementById("r-estrategia").textContent = cap(cell.estrategia) + ".";
+    }
+    const acciones = ACCIONES_POR_HIJO[h] || [];
+    const list = document.getElementById("r-acciones");
+    list.innerHTML = "";
+    acciones.forEach(a => { const li = document.createElement("li"); li.textContent = a; list.appendChild(li); });
+  }
+
+  showScreen("screen-result");
+}
+
+function cap(str) {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// =================================================================
+// MENSAJE WHATSAPP
+// =================================================================
+function buildWhatsappMessage(madre, hijo) {
+  const cell    = (MATRIX[madre] && MATRIX[madre][hijo]) || null;
+  const acciones = ACCIONES_POR_HIJO[hijo] || [];
+  const tagline  = TAGLINES_MADRE[madre] || "";
+
+  let msg = `Hola 👋\n\n`;
+  msg += `Tu Mapa de Activadores ya está listo. Esto es lo que hemos visto:\n\n`;
+  msg += `🔷 *Tu activador dominante: ${madre}*\n`;
+  msg += `${tagline}\n\n`;
+  msg += `🔷 *El activador de tu hijo o hija: ${hijo}*\n`;
+
+  if (cell) {
+    msg += `\n`;
+    msg += `*La dinámica entre vosotros:* ${cell.resumen}.\n`;
+    msg += `Lo que él o ella probablemente piensa: ${cell.pensamiento}\n\n`;
+    msg += `*Tu estrategia clave:* ${cap(cell.estrategia)}.\n`;
+  }
+
+  if (acciones.length) {
+    msg += `\n*3 acciones concretas para esta semana:*\n`;
+    acciones.forEach((a, i) => { msg += `${i + 1}. ${a}\n`; });
+  }
+
+  msg += `\nNos vemos en la Clase 2 🤍\nEdith`;
+  return msg;
+}
+
+// =================================================================
+// FINALIZAR — envía todo al webhook de Make
+// =================================================================
+async function finalize() {
+  const btn    = document.getElementById("btn-finalizar");
+  const status = document.getElementById("r-finalize-status");
+
+  if (!MAKE_WEBHOOK_URL || MAKE_WEBHOOK_URL.indexOf("PEGA") === 0) {
+    status.innerHTML = '<span class="checkmark">✓ Lectura completada</span>';
+    btn.disabled = true;
+    return;
+  }
+
+  btn.disabled = true;
+  status.innerHTML = '<span class="loader"></span> Guardando tu lectura…';
+
+  const payload = {
+    email:          userEmail,
+    whatsapp:       userWhatsApp,
+    tipo:           userType,
+    codigo:         userCodigo,
+    activadorMadre: lastMadre,
+    activadorHijo:  lastHijo,
+    scoresMadre:    madreScores,
+    scoresHijo:     hijoScores,
+    respuestasMadre: madreAnswers,
+    respuestasHijo:  hijoAnswers,
+    timestamp:      new Date().toISOString(),
+    mensajeWhatsapp: buildWhatsappMessage(lastMadre, lastHijo)
+  };
+
+  try {
+    await fetch(MAKE_WEBHOOK_URL, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(payload)
+    });
+    status.innerHTML = '<span class="checkmark">✓ Lectura guardada. ¡Nos vemos en la Clase 2!</span>';
+  } catch (e) {
+    status.innerHTML = 'No se ha podido guardar. Escribe a <a href="mailto:info@edithlando.es">info@edithlando.es</a>.';
+    btn.disabled = false;
+  }
+}
+
+// =================================================================
+// MAPA COMPLETO
+// =================================================================
+const ACTIVADOR_ICONS = {
+  "Seguridad": "🛡️", "Pertenencia": "🤝", "Logro": "🏆", "Autonomía": "🗝️",
+  "Poder": "⚡", "Diversión": "🎉", "Conexión": "💬", "Aportación": "🌱"
+};
+
+function goMap() {
+  const grid = document.getElementById("map-grid");
+  grid.innerHTML = "";
+  Object.entries(ACTIVADORES_INFO).forEach(([name, info]) => {
+    const div = document.createElement("div");
+    div.className = "map-card";
+    div.innerHTML = `
+      <div class="map-card-header">
+        <div class="map-card-icon">${ACTIVADOR_ICONS[name] || "•"}</div>
+        <h3>${name}</h3>
+      </div>
+      <p class="def">${info.def}</p>
+      <div class="signals-block">
+        <span class="block-label">Señales típicas</span>
+        <p class="signals-text">${info.senales}</p>
+      </div>
+      <div class="bridge-block">
+        <span class="block-label">Cómo entrarle</span>
+        <p class="bridge-text">${info.puente}</p>
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+  showScreen("screen-map");
+}
+
+// =================================================================
+// VALIDACIÓN INLINE DE CAMPOS
+// =================================================================
+function setFieldState(inputId, errorId, isValid, force) {
+  const input = document.getElementById(inputId);
+  const err   = document.getElementById(errorId);
+  if (!force && !input.dataset.touched) return;
+  input.classList.toggle("invalid", !isValid);
+  input.classList.toggle("valid",    isValid);
+  err.style.display = isValid ? "none" : "block";
+}
+
+function validateEmail(force) {
+  const v = normEmail(document.getElementById("email").value);
+  setFieldState("email", "err-email", /.+@.+\..+/.test(v), force);
+  return /.+@.+\..+/.test(v);
+}
+function validateWhatsapp(force) {
+  const v = normPhone(document.getElementById("whatsapp").value);
+  const ok = /^\+[1-9]\d{6,14}$/.test(v);
+  setFieldState("whatsapp", "err-whatsapp", ok, force);
+  return ok;
+}
+function validateCodigo(force) {
+  if (userType !== "campus") return true;
+  const v = (document.getElementById("codigo").value || "").trim();
+  setFieldState("codigo", "err-codigo", v.length > 0, force);
+  return v.length > 0;
+}
+
+function setupValidation() {
+  const email = document.getElementById("email");
+  const wa    = document.getElementById("whatsapp");
+  const cod   = document.getElementById("codigo");
+
+  email.addEventListener("blur",  () => { email.dataset.touched = "1"; validateEmail(true); });
+  email.addEventListener("input", () => { if (email.dataset.touched) validateEmail(true); });
+
+  wa.addEventListener("blur",  () => { wa.dataset.touched = "1"; validateWhatsapp(true); });
+  wa.addEventListener("input", () => { if (wa.dataset.touched) validateWhatsapp(true); });
+
+  cod.addEventListener("blur",  () => { cod.dataset.touched = "1"; validateCodigo(true); });
+  cod.addEventListener("input", () => { if (cod.dataset.touched) validateCodigo(true); });
+}
+
+function goResult() { showScreen("screen-result"); }
+
+function restart() {
+  ["email", "whatsapp", "codigo"].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = "";
+    el.classList.remove("valid", "invalid");
+    delete el.dataset.touched;
+  });
+  document.getElementById("email-error").classList.add("hidden");
+  document.getElementById("btn-access").disabled = false;
+  document.getElementById("btn-finalizar").disabled = false;
+  document.getElementById("r-finalize-status").innerHTML = "";
+  setAccessType("taller");
+  showScreen("screen-lock");
+}
+
+// =================================================================
+// INIT
+// =================================================================
+showScreen("screen-lock");
+setupValidation();
+document.getElementById("whatsapp").addEventListener("keydown", e => { if (e.key === "Enter") checkAccess(); });
+document.getElementById("codigo").addEventListener("keydown",   e => { if (e.key === "Enter") checkAccess(); });
+document.getElementById("email").addEventListener("keydown",    e => { if (e.key === "Enter") checkAccess(); });
+</script>
+
+</body>
+</html>
