@@ -783,7 +783,7 @@ async function finalize() {
     respuestasMadre: madreAnswers,
     respuestasHijo:  hijoAnswers,
     timestamp:      new Date().toISOString(),
-    mensajeWhatsapp: buildWhatsappMessage(lastMadre, lastHijo)
+    mensajeWhatsapp: buildWhatsappMessage(lastMadre, lastHijo).replace(/\n/g, '\\n')
   };
 
   try {
