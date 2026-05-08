@@ -783,7 +783,25 @@ async function finalize() {
     respuestasMadre: madreAnswers,
     respuestasHijo:  hijoAnswers,
     timestamp:      new Date().toISOString(),
-    mensajeWhatsapp: buildWhatsappMessage(lastMadre, lastHijo).replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n')
+    mensajeWhatsapp: buildWhatsappMessage(lastMadre, lastHijo),
+    sendflowBody: JSON.stringify({
+      apiKey: "send_api-vdcq9v8cr1xvdr40kg817wu8vik9qj93o6etzwqy",
+      data: {
+        user: { phoneNumber: userWhatsApp },
+        action: {
+          type: "sendMessages",
+          payload: {
+            data: {
+              messages: [{
+                type: "extendedTextMessage",
+                message: { text: buildWhatsappMessage(lastMadre, lastHijo) }
+              }]
+            }
+          }
+        }
+      },
+      event: "actionTrigger"
+    })
   };
 
   try {
